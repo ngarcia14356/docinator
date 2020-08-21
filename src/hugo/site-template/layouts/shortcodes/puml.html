@@ -1,0 +1,4 @@
+{{- $file := replace (printf "%s%s" $.Page.File.Dir (.Get "file")) "\\" "/" -}} {{- $imgId := replaceRE "[^a-zA-Z\\d:]" "" $file -}}
+<a href="/{{$file}}.svg" target="_blank">
+    <img src="/{{$file}}.svg" id="{{ $imgId }}" />
+</a>

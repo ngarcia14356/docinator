@@ -1,0 +1,15 @@
+@startuml
+
+actor Developer
+
+== Buid a Documentation Site ==
+  Developer -> Docinator: docinator build ...
+  Docinator -> Docinator: Do Magic
+  Docinator -> Hugo: Generate Website
+  Hugo -> Docinator: Website Info
+  Docinator -> Developer: Happyness
+
+== Publish the Documentation Site ==
+  Developer -> S3: Works on any static website host
+
+@enduml

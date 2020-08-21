@@ -1,0 +1,6 @@
+.docinator
+coverage
+dist
+node_modules
+*.spec.ts
+.gitignore

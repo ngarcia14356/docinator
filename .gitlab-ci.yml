@@ -1,0 +1,50 @@
+include:
+  - project: 'tmobile/templates'
+    ref: tmo/master
+    file: '/gitlab-ci/.tmo.global.common.gitlab-ci.yml'
+  - project: 'tmobile/templates'
+    ref: tmo/master
+    file: '/gitlab-ci/.tmo.job.npm.gitlab-ci.yml'
+  - project: 'tmobile/templates'
+    ref: tmo/master
+    file: '/gitlab-ci/.tmo.job.docker.gitlab-ci.yml'
+
+stages:
+    - tmo
+    - build
+    - test
+    - package
+    - deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+image: node:latest
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+
+unit_test:
+  stage: build
+  image: openjdk:15-jdk-alpine
+  script:
+    - apk add --no-cache graphviz nodejs npm ttf-droid bash ttf-droid-nonlatin
+    - npm install
+    - npm test
+
+publish:
+  stage: deploy
+  only:
+    refs:
+      - master
+  script:
+    - npm config set '//gitlab.com/api/v4/projects/13999280/packages/npm/:_authToken=${NPM_TOKEN}'
+    - npm config set '//gitlab.com/api/v4/packages/npm/:_authToken=${NPM_TOKEN}'
+    - npm install
+    - npm publish

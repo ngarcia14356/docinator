@@ -1,0 +1,22 @@
+{{- $file := replace (printf "%s%s" $.Page.File.Dir (.Get "file")) "\\" "/" -}}
+<!-- From https://github.com/tenfourty/hugo-openapispec-shortcode -->
+<style>iframe{width:100%}</style>
+<iframe id="swagger-ui" frameBorder="0" scrolling="no" src="{{ "swagger-ui/" | absURL }}" >
+</iframe>
+
+<script type="text/javascript" src="{{"/scripts/iframeResizer.min.js" | absURL }}"></script>
+<script type="text/javascript">
+  iFrameResize({
+    log         : true, // Enable console logging
+    checkOrigin : false,
+    sizeWidth   : true,
+    widthCalculationMethod : 'rightMostElement'
+  });
+  var shortcode_url = "/{{ $file }}";
+  {{ with .Get "api_key" }}
+  var shortcode_api_key = "{{ . }}";
+  {{ end }}
+</script>
+
+<!-- todo Make this a seperate shortcode -->
+(<a href="/{{ $file }}" target="_blank">Download this Swagger</a>)

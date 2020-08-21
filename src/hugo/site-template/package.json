@@ -1,0 +1,18 @@
+{
+  "name": "docinator-basesite",
+  "version": "1.0.0",
+  "description": "Base installation for Docinator",
+  "main": "index.js",
+  "scripts": {
+    "build": "hugo -s site",
+    "create": "hugo new -s site",
+    "serve": "hugo server -w -s site --buildDrafts --buildFuture",
+    "test": "hugo benchmark -s site --buildDrafts --buildFuture",
+    "hugo-version": "hugo version"
+  },
+  "author": "T-Mobile Product & Technology",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "hugo-bin": "^0.45.2"
+  }
+}

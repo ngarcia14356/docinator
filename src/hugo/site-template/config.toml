@@ -1,0 +1,14 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Documentation"
+theme = "hugo-theme-learn"
+relativeURLs = true
+disablePathToLower = true
+
+[params]
+  # Change default color scheme with a variant one. Can be "red", "blue", "green".
+  themeVariant = "tmobile"
+
+# For search functionnality
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
