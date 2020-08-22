@@ -13,12 +13,12 @@ The [button shortcode](https://learn.netlify.com/en/shortcodes/button/) allows y
 So this:
 
 ```markdown
-{{%/* button href="todo://link-to-repo" icon="fa fa-download" %}}Get Docinator!{{% /button */%}}
+{{%/* button href="https://github.com/tmobile/docinator" icon="fa fa-download" %}}Get Docinator!{{% /button */%}}
 ```
 
 Becomes this:
 
-{{% button href="todo://link-to-repo" icon="fa fa-download" %}}Get Docinator!{{% /button %}}
+{{% button href="https://github.com/tmobile/docinator" icon="fa fa-download" %}}Get Docinator!{{% /button %}}
 
 ## Expanding Content
 
