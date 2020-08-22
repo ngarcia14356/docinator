@@ -4,8 +4,8 @@ import { ensure } from "../file-system/directory";
 
 export interface CatalogItem {
   itemPath: string;
-  catelogItemPath: string;
-  catelogItemCreated: boolean;
+  catalogItemPath: string;
+  catalogItemCreated: boolean;
 }
 
 /**
@@ -23,7 +23,7 @@ export interface Cataloger {
 export async function catalog(
   paths: string[],
   inDir: string,
-  catelogItem: Cataloger
+  catalogItem: Cataloger
 ): Promise<CatalogItem[]> {
   await ensure(inDir);
   const pathsRoot = commonRoot(...paths) || ".";
@@ -31,7 +31,7 @@ export async function catalog(
     paths.map(path => {
       const catalogRelLink = join(inDir, relative(pathsRoot, path));
       const pathRelLink = relative(catalogRelLink, path);
-      return catelogItem(path, catalogRelLink, pathRelLink);
+      return catalogItem(path, catalogRelLink, pathRelLink);
     })
   );
 

@@ -26,25 +26,25 @@ export async function hugoRenderedItemsCatalog(
             relative(dirname(indexPath), item.itemPath)
           ),
           mdLink(
-            relative(dirname(indexPath), item.catelogItemPath.replace(/ /g, "-")),
-            relative(dirname(indexPath), item.catelogItemPath.replace(/ /g, "-"))
+            relative(dirname(indexPath), item.catalogItemPath.replace(/ /g, "-")),
+            relative(dirname(indexPath), item.catalogItemPath.replace(/ /g, "-"))
           ),
         ])
       );
     catalogItems.push({
       itemPath: indexPath,
-      catelogItemPath: await writeMarkdown(
+      catalogItemPath: await writeMarkdown(
         indexPath,
         { title, weight: 1000 },
         indexMdContent
       ),
-      catelogItemCreated: true,
+      catalogItemCreated: true,
     });
   }
 
   return catalogItems
-    .filter(item => item.catelogItemCreated)
-    .map(item => item.catelogItemPath);
+    .filter(item => item.catalogItemCreated)
+    .map(item => item.catalogItemPath);
 }
 
 function createHugoCataloger(
@@ -56,20 +56,20 @@ function createHugoCataloger(
   return async (itemPath, catalogRelLink, pathRelLink) => {
     if (!include(itemPath)) return undefined;
 
-    const catelogItemPath = catalogRelLink + ".md";
-    const catelogItemCreated =
-      !(await exists(catelogItemPath)) &&
-      !!(await ensure(dirname(catelogItemPath))) &&
+    const catalogItemPath = catalogRelLink + ".md";
+    const catalogItemCreated =
+      !(await exists(catalogItemPath)) &&
+      !!(await ensure(dirname(catalogItemPath))) &&
       !!(await writeMarkdown(
-        catelogItemPath,
+        catalogItemPath,
         { title: basename(itemPath) },
         `{{< ${shortcode} file="${pathRelLink}" >}}`
       ));
 
     return {
       itemPath,
-      catelogItemPath,
-      catelogItemCreated,
+      catalogItemPath: catalogItemPath,
+      catalogItemCreated: catalogItemCreated,
     };
   };
 }
