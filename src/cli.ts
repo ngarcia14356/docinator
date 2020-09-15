@@ -18,7 +18,7 @@ register({
   argsDescriptor: "[files...]",
   description:
     "Builds a documentation website for the given source directory. " +
-    "If no source directory is specified, the current foler is assumed." +
+    "If no source directory is specified, the current folder is assumed." +
     "Optionally, pass a list of files at the end of the command to build ONLY those files.",
 })
   .to(cli)
@@ -26,18 +26,18 @@ register({
   .option("--destination <destination>")
   .option("--source <source>");
 
-  register({
-    action: serve,
-    argsDescriptor: "[files...]",
-    description:
-      "Builds a documentation website for the given source directory. " +
-      "If no source directory is specified, the current foler is assumed." +
-      "Optionally, pass a list of files at the end of the command to build ONLY those files.",
-  })
-    .to(cli)
-    .option("--clean")
-    .option("--destination <destination>")
-    .option("--source <source>");
+register({
+  action: serve,
+  argsDescriptor: "[files...]",
+  description:
+    "Builds a documentation website for the given source directory. " +
+    "If no source directory is specified, the current foler is assumed." +
+    "Optionally, pass a list of files at the end of the command to build ONLY those files.",
+})
+  .to(cli)
+  .option("--clean")
+  .option("--destination <destination>")
+  .option("--source <source>");
 
 // TODO: .option("-b, --builder <builder>", "hugo|gatsby", "hugo");
 
@@ -54,9 +54,7 @@ const fail = (err: any) => {
 
 try {
   cli.parse(process.argv);
-  execute()
-    .then(succeed)
-    .catch(fail);
+  execute().then(succeed).catch(fail);
 } catch (err) {
   fail(err);
 }
