@@ -32,13 +32,7 @@ that unless you have a strong preference for another editor.
 
 ### System Requirements
 
-If you don't have typescript and TS-Node installed, start by installing them:
-
-```bash
-npm install -g typescript ts-node
-```
-
-You'll also need Java 8 or above for the PlantUML integration.
+You'll need Java 8 or above for the PlantUML integration.
 
 ### Project Initialization and First Run
 
@@ -64,6 +58,30 @@ To avoid having to re-link between changes, use ts-node:
 ```bash
 ts-node src/cli.ts --help
 ```
+
+### Build with Docker
+
+```bash
+docker build -t docinator .
+```
+
+### Run with Docker
+
+To build:
+
+```bash
+docker run -v "$(pwd):/data" -ti docinator build
+```
+
+To serve: 
+
+```bash
+docker run -v "$(pwd):/data" -p 1313:1313 -ti docinator serve
+```
+
+> Note about using `$(pwd)` on Docker for Windows using GitBash and WSL-based engine: The `$(pwd)` value will pass the _Windows_ path to the _Linux_ host where it is invalid. Instead, try running directly from a WSL terminal.
+
+> Note about WSL: WSL may not allow port access on `1313` by default. Use `sudo ufw allow 1313` to allow access to port `1313`. You can disallow this later with `sudo ufw deny 1313`.
 
 <!-- TODO:
 
