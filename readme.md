@@ -67,13 +67,13 @@ docker build -t docinator .
 
 ### Run with Docker
 
-To build:
+To build a Docinator site:
 
 ```bash
 docker run -v "$(pwd):/data" -ti docinator build
 ```
 
-To serve: 
+To serve a Docinator site: 
 
 ```bash
 docker run -v "$(pwd):/data" -p 1313:1313 -ti docinator serve
