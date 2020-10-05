@@ -13,6 +13,6 @@ describe("The packageJson object", function() {
   });
 
   it("Can read the version from the package.json file", function() {
-    expect(packageJson.version).to.equal("0.1.4");
+    expect(packageJson.version).to.equal("0.1.5");
   });
 });
