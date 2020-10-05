@@ -32,7 +32,7 @@ describe("The plantuml module", function() {
       });
 
       describe("When it is rendered as a PNG", function() {   
-        this.timeout(3500);
+        this.timeout(7000);
         const pngPath = join(__dirname, "render.png");
         const pumlPngPath = join(__dirname, "render.puml.png");
 
@@ -43,13 +43,12 @@ describe("The plantuml module", function() {
         });
 
         afterEach(async function() {
-          //
+          await Promise.all([unlink(pngPath), unlink(pumlPngPath)]);
         });
 
         it("Renders the PlantUML file in the specified format at predictable file paths", async function() {
           expect(await size(pngPath)).to.be.greaterThan(9000);
           expect(await size(pumlPngPath)).to.be.greaterThan(9000);
-          await Promise.all([unlink(pngPath), unlink(pumlPngPath)]);
         });
 
         // it("Returns the rendered file path", async function() {
@@ -70,6 +69,7 @@ describe("The plantuml module", function() {
       });
 
       it("Throws an exception to indicate the problem", async function() {
+        this.timeout(3000);
         // const pngPath = join(__dirname, "invalid.png");
         console.log("Rendering", pumlPath);
         await render("png", pumlPath)

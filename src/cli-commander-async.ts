@@ -1,4 +1,4 @@
-import { Command } from "commander";
+import { Command, CommanderStatic } from "commander";
 
 const promises: Promise<any>[] = [];
 
@@ -28,7 +28,7 @@ export function register({
   action,
 }: CommandInfo) {
   return {
-    to: function(parent: Command) {
+    to: function(parent: CommanderStatic) {
       const commandDescriptor = `${name || action.name} ${argsDescriptor ||
         ""}`.trim();
       return parent
