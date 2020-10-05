@@ -8,7 +8,7 @@ export type Builder = {
   (
     destination: string,
     docsPath: string,
-    ...sources: string[]
+    sources: string[]
   ): Promise<string[]>;
 };
 

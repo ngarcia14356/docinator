@@ -22,8 +22,8 @@ export const hugoProvider: Provider = {
     exec(`${hugo} --source ${destinationPath} `); //--destination ${this.destinationWorkspace.root}`)
     return result; 
   },
-  serve: async (destinationPath, docsPath, ...sourcePaths) => { 
-    const result = await build(destinationPath, docsPath, ...sourcePaths);
+  serve: async (destinationPath, docsPath, sourcePaths) => { 
+    const result = await build(destinationPath, docsPath, sourcePaths);
     exec(`${hugo} serve --watch=true --source ${destinationPath} --bind 0.0.0.0`);
     return result; 
   },
@@ -32,7 +32,7 @@ export const hugoProvider: Provider = {
 export const build: Builder = async (
   destinationPath,
   docsPath,
-  ...sourcePaths
+  sourcePaths
 ) => {
   // Source Paths
   docsPath = resolve(docsPath);

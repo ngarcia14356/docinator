@@ -54,7 +54,7 @@ export async function build(
   );
 
   const builderImpl = providers[builder || defaults.builder];
-  const result = await builderImpl.build(destination, docsPath, ...files);
+  const result = await builderImpl.build(destination, docsPath, files);
   console.log("Build files created", result);
   return result;
 }
@@ -88,7 +88,7 @@ export async function serve(
   // docinator build --source . --destination foo [paths]
 
   const builderImpl = providers[builder || defaults.builder];
-  const result = await builderImpl.serve(destination, docsPath, ...files);
+  const result = await builderImpl.serve(destination, docsPath, files);
   console.log("Build files created", result);
   return result;
 }
