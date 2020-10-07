@@ -5,12 +5,12 @@ draft: false
 
 # Docinator
 
-Welcome to the documentation for Docinator! Docinator is a simple [CLI](cli) for taking the markdown from a `docs` folider and distilling the documentation from it by generating a beautiful website containing all of your project's documentation. It supports PlantUML and Mermaid diagrams, and makes incorporating Swaggers a snap!
+Welcome to the documentation for Docinator! Docinator is a simple [CLI](cli) for taking the markdown from a `docs` folder and distilling the documentation from it by generating a beautiful website containing all of your project's documentation. It supports PlantUML and Mermaid diagrams, and makes incorporating Swaggers a snap!
 
 ## Getting Started
 
 {{% notice warning %}}
-Before installing Docinator, make sure you nave the [current version of NodeJS](https://nodejs.org/en/) installed (8.11 or higher), as well as [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) or above (it may work with earlier versions, but it is untested).
+Before installing Docinator, make sure you have the [current version of NodeJS](https://nodejs.org/en/) installed (8.11 or higher), as well as [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) or above (it may work with earlier versions, but it is untested).
 {{% /notice %}}
 
 Install Docinator via the command line:
@@ -55,7 +55,7 @@ Documentation that exists outside of code is managed using processes outside of 
 - The code history is the documentation history, so you always know if code changes are out-pacing documentation changes and you get the full traceability of Git.
 - Pipelines can enforce rules, such as "pull requests must include documentation changes"
 - Publishing new versions of a product includes publishing the accompanying documentation, because the documentation and the code aren't treated any differently.
-- Processes (e.g. spring cerimonies) can be shared
+- Processes (e.g. spring ceremonies) can be shared
 
 ### Where Docinator Comes In
 
