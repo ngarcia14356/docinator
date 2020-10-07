@@ -19,7 +19,7 @@ RUN set -e && \
 
 FROM openjdk:15-jdk-alpine
 
-COPY --from=builder . .
+COPY --from=builder /docinator /docinator
 
 WORKDIR /docinator
 
