@@ -55,7 +55,7 @@ Documentation that exists outside of code is managed using processes outside of 
 - The code history is the documentation history, so you always know if code changes are out-pacing documentation changes and you get the full traceability of Git.
 - Pipelines can enforce rules, such as "pull requests must include documentation changes"
 - Publishing new versions of a product includes publishing the accompanying documentation, because the documentation and the code aren't treated any differently.
-- Processes (e.g. spring ceremonies) can be shared
+- Processes (e.g. sprint ceremonies) can be shared
 
 ### Where Docinator Comes In
 
