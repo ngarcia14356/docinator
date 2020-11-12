@@ -1,7 +1,7 @@
 import { copyFile } from "./../file-system/fs";
 import { join } from "path";
 import { writeFile, readFile } from "../file-system/fs";
-import { exec } from "../utils";
+import { chunk, exec } from "../utils";
 
 const plantUmlJarFilePath = join(
   __dirname,
@@ -37,17 +37,22 @@ export async function render(format: string, ...pumlPaths: string[]) {
   pumlPaths = pumlPaths.filter(path => path.toLowerCase().endsWith(".puml"));
   if (pumlPaths.length === 0) return [];
 
-  const normalizePumlsWork = normalizePumls(...pumlPaths);
-  const paths = pumlPaths.map(pumlPath => `"${pumlPath}"`).join(" ");
-  await normalizePumlsWork;
+  const pumlPathsChunks = chunk(pumlPaths, 64); // 64, 96, 128 Chunk to not exceed max arg length
 
-  exec(
-    `java -Djava.awt.headless=true -jar ${plantUmlJarFilePath} -t${format} ${paths}`
-  );
+  for(const pumlPathsChunk of pumlPathsChunks) {
+    const normalizePumlsWork = normalizePumls(...pumlPathsChunk);
+    const paths = pumlPathsChunk.map(pumlPath => `"${pumlPath}"`).join(" ");
+    await normalizePumlsWork;
+  
+    exec(
+      `java -Djava.awt.headless=true -jar ${plantUmlJarFilePath} -t${format} ${paths}`
+    );
+  }
 
   const rendered = pumlPaths.map(
     path => path.substring(0, path.length - 4) + format
   ); // foo.puml => foo.svg
+
   const copies = pumlPaths.map(path => path + "." + format); // foo.puml => foo.puml.svg
 
   await Promise.all([

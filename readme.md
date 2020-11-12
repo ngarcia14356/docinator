@@ -39,7 +39,8 @@ You'll need Java 8 or above for the PlantUML integration.
 The following will download the code, install dependencies, and serve the Docinator documentation:
 
 ```bash
-git clone --recurse-submodules ...
+git clone --recurse-submodules git@github.com:tmobile/docinator.git
+cd docinator
 npm i
 ts-node src/cli.ts serve
 ```
@@ -73,7 +74,7 @@ To build a Docinator site:
 docker run -v "$(pwd):/data" -ti docinator build
 ```
 
-To serve a Docinator site: 
+To serve a Docinator site:
 
 ```bash
 docker run -v "$(pwd):/data" -p 1313:1313 -ti docinator serve

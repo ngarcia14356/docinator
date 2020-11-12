@@ -20,3 +20,22 @@ export function exec(command: string){
 
   return result;
 }
+
+/**
+ * Divides an array into multiple arrays
+ *
+ * @export
+ * @param {unknown[]} array - the array to divide
+ * @param {number} size - the desired chunk size
+ * @returns - an array of arrays
+ */
+export function chunk<T>(array: T[], size: number){
+  const arrayCopy = [...array];
+  const result = [];
+  for (let i = 0; i < arrayCopy.length; i += size) {
+      // Do something if you want with the group
+      result.push(arrayCopy.slice(i, i+size));
+  }
+
+  return result;
+}

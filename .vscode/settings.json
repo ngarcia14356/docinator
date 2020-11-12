@@ -6,6 +6,8 @@
         "docinator",
         "plantuml",
         "puml",
-        "shortcode"
+        "shortcode",
+        "startuml",
+        "submodules"
     ]
 }

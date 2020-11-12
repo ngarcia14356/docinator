@@ -1,5 +1,5 @@
 import { promisify } from "util";
-import * as fs from "fs";
+import * as fs from "graceful-fs";
 import { dirname, sep, resolve, join, relative } from "path";
 import { isDir, ensure } from "./directory";
 import { copyIfNewer } from "./file";

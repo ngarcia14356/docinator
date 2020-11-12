@@ -1,6 +1,6 @@
 {
     "name": "@tmobile/docinator",
-    "version": "0.1.5",
+    "version": "0.2.0",
     "description": "Extracts documentation from your project to produce a beautiful static website",
     "main": "dist/index.js",
     "preferGlobal": true,
@@ -15,7 +15,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "tbd"
+        "url": "https://github.com/tmobile/docinator/"
     },
     "keywords": [
         "documentation",
@@ -28,6 +28,7 @@
     "devDependencies": {
         "@types/chai": "^4.2.13",
         "@types/chai-as-promised": "^7.1.3",
+        "@types/graceful-fs": "^4.1.4",
         "@types/mocha": "^8.0.3",
         "@types/node": "^14.11.2",
         "@types/shelljs": "^0.8.8",
@@ -43,6 +44,7 @@
     },
     "dependencies": {
         "commander": "^6.1.0",
+        "graceful-fs": "^4.2.4",
         "hugo-bin": "^0.63.1",
         "shelljs": "^0.8.4"
     },
