@@ -55,9 +55,9 @@ export async function render(format: string, ...pumlPaths: string[]) {
 
   const copies = pumlPaths.map(path => path + "." + format); // foo.puml => foo.puml.svg
 
-  await Promise.all([
-    rendered.map((source, index) => copyFile(source, copies[index])),
-  ]);
+  await Promise.all(
+    rendered.map((source, index) => copyFile(source, copies[index]))
+  );
 
   return [...rendered, ...copies];
 }
