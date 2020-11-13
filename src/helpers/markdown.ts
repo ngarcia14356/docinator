@@ -87,6 +87,13 @@ export function mdTableColumnHeaders(...headers: string[]) {
 	);
 }
 
+/**
+ * Converts an array of strings to columns to form a single row in a markdown table
+ *
+ * @export
+ * @param {...string[]} values - Values to form the row
+ * @returns - A string containing a single table row in markdown format
+ */
 export function mdTableRow(...values: string[]) {
 	return (
 		values

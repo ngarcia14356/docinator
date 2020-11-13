@@ -2,6 +2,13 @@ import { statSafe, readdir, unlink, rmdir, files } from "./fs";
 import { join } from "path";
 import { mkdir } from "shelljs";
 
+/**
+ * Creates the specified path if it does not already exist
+ *
+ * @export
+ * @param {string} path - The path to ensure the existence of
+ * @returns - the provided path
+ */
 export async function ensure(path: string) {
 	if (!(await exists(path))) {
 		mkdir("-p", path);
@@ -10,15 +17,35 @@ export async function ensure(path: string) {
 	return path;
 }
 
+/**
+ * Returns true if the provided path exists and is a directory
+ *
+ * @export
+ * @param {string} path - The path to check for existence
+ * @returns - True if the specified directory exists, otherwise false
+ */
 export async function exists(path: string) {
 	return !!(await isDir(path));
 }
 
+/**
+ * Determines if the provided path is a directory
+ *
+ * @export
+ * @param {string} path - The path to check
+ * @returns - True if the provided path is a directory, otherwise false
+ */
 export async function isDir(path: string) {
 	const stats = await statSafe(path);
 	return !!stats && stats.isDirectory();
 }
 
+/**
+ * Removes the directory at the specified path and all its contents
+ *
+ * @export
+ * @param {string} path - The path to remove
+ */
 export async function remove(path: string) {
 	if (await exists(path)) {
 		const contents = await files(path);

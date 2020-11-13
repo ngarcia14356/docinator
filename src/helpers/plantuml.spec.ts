@@ -8,10 +8,10 @@ import { EOL } from "os";
 
 describe("The plantuml module", function () {
 	const pumlContent = `@startuml Given a Valid Plant UML file
-    render -> Java: Call Java
-    Java --> PlantUML: Execute the JAR
-    PlantUML --> FS: Write the diagram to the File System
-    @enduml`.replace(/ {2}/g, "");
+		render -> Java: Call Java
+		Java --> PlantUML: Execute the JAR
+		PlantUML --> FS: Write the diagram to the File System
+		@enduml`.replace(/\t{2}/g, "");
 
 	describe("The normalize function", function () {
 		it("Removes the file rename directive", function () {
