@@ -1,12 +1,13 @@
-import { Command, CommanderStatic } from "commander";
+import { CommanderStatic } from "commander";
 
-const promises: Promise<any>[] = [];
+const promises: Promise<unknown>[] = [];
 
 type CommandInfo = {
-  action: (...args: any[]) => Promise<any>;
-  argsDescriptor?: string;
-  description: string;
-  name?: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	action: (...args: any[]) => Promise<any>;
+	argsDescriptor?: string;
+	description: string;
+	name?: string;
 };
 
 /**
@@ -22,24 +23,25 @@ type CommandInfo = {
  * @returns An action that enqueues execution of the provided action so that it can be awaited using the execute() function
  */
 export function register({
-  name,
-  description,
-  argsDescriptor,
-  action,
+	name,
+	description,
+	argsDescriptor,
+	action,
 }: CommandInfo) {
-  return {
-    to: function(parent: CommanderStatic) {
-      const commandDescriptor = `${name || action.name} ${argsDescriptor ||
-        ""}`.trim();
-      return parent
-        .command(commandDescriptor)
-        .description(description)
-        .action(function(...args) {
-          console.debug(`Executing ${commandDescriptor}`);
-          promises.push(action(...args));
-        });
-    },
-  };
+	return {
+		to: function (parent: CommanderStatic) {
+			const commandDescriptor = `${name || action.name} ${
+				argsDescriptor || ""
+			}`.trim();
+			return parent
+				.command(commandDescriptor)
+				.description(description)
+				.action(function (...args) {
+					console.debug(`Executing ${commandDescriptor}`);
+					promises.push(action(...args));
+				});
+		},
+	};
 }
 
 /**
@@ -48,5 +50,5 @@ export function register({
  * @export
  */
 export async function execute() {
-  await Promise.all(promises);
+	await Promise.all(promises);
 }

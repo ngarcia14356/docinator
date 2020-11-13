@@ -1,13 +1,24 @@
 {
     "cSpell.words": [
-        "Pumls",
+        "pumls",
         "Woot",
         "djava",
         "docinator",
+        "enduml",
         "plantuml",
         "puml",
         "shortcode",
         "startuml",
         "submodules"
     ]
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+    },
+    "eslint.validate": [
+      "javascript",
+      "typescript",
+    ],
+    "files.eol": "\n",
 }

@@ -1,24 +1,23 @@
 import { exec as shellExec } from "shelljs";
 
-
 /**
- * Wraps the shelljs.exec command to add logging and error handling. 
+ * Wraps the shelljs.exec command to add logging and error handling.
  *
  * @export
  * @param {string} command - The command to execute (please maintain shell/windows-command compatibility whenever possible)
  * @returns The result of the executed command
  */
-export function exec(command: string){
-  console.log(command);
-  const result = shellExec(command);
-  console.log(result.stdout);
+export function exec(command: string) {
+	console.log(command);
+	const result = shellExec(command);
+	console.log(result.stdout);
 
-  if (result.code !== 0) {
-    console.error(result.stderr);
-    throw new Error(result.stderr.trim());
-  }
+	if (result.code !== 0) {
+		console.error(result.stderr);
+		throw new Error(result.stderr.trim());
+	}
 
-  return result;
+	return result;
 }
 
 /**
@@ -29,13 +28,13 @@ export function exec(command: string){
  * @param {number} size - the desired chunk size
  * @returns - an array of arrays
  */
-export function chunk<T>(array: T[], size: number){
-  const arrayCopy = [...array];
-  const result = [];
-  for (let i = 0; i < arrayCopy.length; i += size) {
-      // Do something if you want with the group
-      result.push(arrayCopy.slice(i, i+size));
-  }
+export function chunk<T>(array: T[], size: number) {
+	const arrayCopy = [...array];
+	const result = [];
+	for (let i = 0; i < arrayCopy.length; i += size) {
+		// Do something if you want with the group
+		result.push(arrayCopy.slice(i, i + size));
+	}
 
-  return result;
+	return result;
 }

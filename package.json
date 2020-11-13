@@ -1,54 +1,62 @@
 {
-    "name": "@tmobile/docinator",
-    "version": "0.2.0",
-    "description": "Extracts documentation from your project to produce a beautiful static website",
-    "main": "dist/index.js",
-    "preferGlobal": true,
-    "bin": {
-        "docinator": "./dist/cli.js"
-    },
-    "scripts": {
-        "build": "npm prune && npm pack",
-        "prepare": "tsc && rm -f *.tgz && rm -rf dist/hugo/site-template && cp -R src/hugo/site-template dist/hugo/site-template",
-        "test": "mocha -r ts-node/register \"**/*.spec.ts\"",
-        "start": "ts-node src/cli.ts"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/tmobile/docinator/"
-    },
-    "keywords": [
-        "documentation",
-        "docs",
-        "documentation-as-code",
-        "static-website-generator"
-    ],
-    "author": "T-Mobile Product & Technology Team",
-    "license": "Apache-2.0",
-    "devDependencies": {
-        "@types/chai": "^4.2.13",
-        "@types/chai-as-promised": "^7.1.3",
-        "@types/graceful-fs": "^4.1.4",
-        "@types/mocha": "^8.0.3",
-        "@types/node": "^14.11.2",
-        "@types/shelljs": "^0.8.8",
-        "@types/sinon": "^9.0.8",
-        "@types/sinon-chai": "^3.2.5",
-        "chai": "^4.2.0",
-        "chai-as-promised": "^7.1.1",
-        "mocha": "^8.1.3",
-        "sinon": "^7.4.1",
-        "sinon-chai": "^3.3.0",
-        "ts-node": "^8.3.0",
-        "typescript": "^3.5.3"
-    },
-    "dependencies": {
-        "commander": "^6.1.0",
-        "graceful-fs": "^4.2.4",
-        "hugo-bin": "^0.63.1",
-        "shelljs": "^0.8.4"
-    },
-    "publishConfig": {
-        "@tmobile:registry": "https://gitlab.com/api/v4/projects/13999280/packages/npm/"
-    }
+	"author": "T-Mobile Product & Technology Team",
+	"description": "Extracts documentation from your project to produce a beautiful static website",
+	"license": "Apache-2.0",
+	"name": "@tmobile/docinator",
+	"version": "0.2.0",
+	"scripts": {
+		"build": "npm link --force && npm prune && npm pack",
+		"build:clean": "rm -rf dest && npm run build",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"prepare": "tsc && rm -f *.tgz && rm -rf dist/hugo/site-template && cp -R src/hugo/site-template dist/hugo/site-template",
+		"start": "ts-node src/cli.ts",
+		"test": "mocha -r ts-node/register \\\"**/*.spec.ts\\\""
+	},
+	"dependencies": {
+		"commander": "^6.1.0",
+		"graceful-fs": "^4.2.4",
+		"hugo-bin": "^0.63.1",
+		"shelljs": "^0.8.4"
+	},
+	"devDependencies": {
+		"@types/chai": "^4.2.13",
+		"@types/chai-as-promised": "^7.1.3",
+		"@types/mocha": "^8.0.3",
+		"@types/node": "^14.11.5",
+		"@types/shelljs": "^0.8.8",
+		"@types/sinon": "^9.0.8",
+		"@types/sinon-chai": "^3.2.5",
+		"@typescript-eslint/eslint-plugin": "^4.4.0",
+		"@typescript-eslint/parser": "^4.4.0",
+		"chai": "^4.2.0",
+		"eslint": "^7.10.0",
+		"chai-as-promised": "^7.1.1",
+		"eslint-config-prettier": "^6.12.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"mocha": "^8.1.3",
+		"prettier": "2.1.2",
+		"sinon": "^9.2.0",
+		"sinon-chai": "^3.5.0",
+		"ts-node": "^9.0.0",
+		"typescript": "^4.0.3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tmobile/docinator/"
+	},
+	"main": "dist/index.js",
+	"preferGlobal": true,
+	"bin": {
+		"docinator": "./dist/cli.js"
+	},
+	"publishConfig": {
+		"@tmobile:registry": "https://gitlab.com/api/v4/projects/13999280/packages/npm/"
+	},
+	"keywords": [
+		"documentation",
+		"docs",
+		"documentation-as-code",
+		"static-website-generator"
+	]
 }
