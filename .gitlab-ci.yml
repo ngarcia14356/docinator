@@ -24,13 +24,13 @@ cache:
   paths:
     - node_modules/
 
-build:
+npm-build:
   stage: build
   script:
     - npm install
     - npm run build
 
-unit_test:
+npm-test:
   stage: build
   image: openjdk:15-jdk-alpine
   script:
