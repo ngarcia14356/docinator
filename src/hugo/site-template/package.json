@@ -1,5 +1,5 @@
 {
-  "name": "docinator-basesite",
+  "name": "docinator-base-site",
   "version": "1.0.0",
   "description": "Base installation for Docinator",
   "main": "index.js",

@@ -80,18 +80,15 @@ To serve a Docinator site:
 docker run -v "$(pwd):/data" -p 1313:1313 -ti docinator serve
 ```
 
-> Note about using `$(pwd)` on Docker for Windows using GitBash and WSL-based engine: The `$(pwd)` value will pass the _Windows_ path to the _Linux_ host where it is invalid. Instead, try running directly from a WSL terminal.
-
+> Note about using `$(pwd)` on Docker for Windows using GitBash and WSL-based engine: The `$(pwd)` value will pass the _Windows_ path to the _Linux_ host where it is invalid. Instead, try running directly from a WSL terminal
+>
+> ---
+>
 > Note about WSL: WSL may not allow port access on `1313` by default. Use `sudo ufw allow 1313` to allow access to port `1313`. You can disallow this later with `sudo ufw deny 1313`.
-
-<!-- TODO:
-
-## Resources
-
-* [asciinema](https://asciinema.org/)
-
--->
 
 ## Acknowledgements
 
-This distribution includes a binary for [PlantUML](https://github.com/plantuml/plantuml).
+* [Hugo](https://gohugo.io/) and [Hugo Theme Learn](https://themes.gohugo.io/hugo-theme-learn/) are used to generate static websites.
+* [PlantUML](https://github.com/plantuml/plantuml) is used to generate PlantUML diagrams; this repository includes a binary distribution of PlantUML.
+* [Swagger UI](https://swagger.io/tools/swagger-ui/) is used to visualize swagger files.
+* Additional libraries and frameworks used are listed in the [package.json](package.json) file of this repository.
