@@ -38,13 +38,3 @@ npm-test:
     - npm install
     - npm test
 
-publish:
-  stage: deploy
-  only:
-    refs:
-      - master
-  script:
-    - npm config set '//gitlab.com/api/v4/projects/13999280/packages/npm/:_authToken=${NPM_TOKEN}'
-    - npm config set '//gitlab.com/api/v4/packages/npm/:_authToken=${NPM_TOKEN}'
-    - npm install
-    - npm publish
