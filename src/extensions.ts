@@ -1,6 +1,7 @@
 export const assetFileExtensions: string[] = [
 	".bmp",
 	".gif",
+	".iuml",
 	".jpeg",
 	".jpg",
 	".json",
