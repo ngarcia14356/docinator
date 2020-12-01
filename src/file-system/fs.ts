@@ -78,7 +78,7 @@ export function copy(sourcePath?: string, ...includeOnly: string[]) {
 export async function exists(path: string) {
 	try {
 		return !!(await stat(path));
-	} catch (err: unknown) {
+	} catch (err) {
 		if ((err as { code: string }).code === noSuchFileOrDirectoryCode) {
 			return false;
 		}
