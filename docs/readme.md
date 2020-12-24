@@ -43,6 +43,8 @@ Once combined, Docinator does a little "magic" to make things are structured con
 
 ## What is "Documentation as Code"?
 
+> "Email is where keystrokes go to Die" --Scott Hanselman
+
 Documentation that exists outside of code is managed using processes outside of code, and that creates unnecessary overhead.
 
 - Documentation easily becomes outdated - you can't "see" the need for a documentation update in a pull request, for instance
