@@ -109,3 +109,24 @@ export async function files(...sources: string[]) {
 	await Promise.all(work);
 	return result;
 }
+
+export async function dirs(sources: string[]) {
+	const result: string[] = [];
+	const work: Promise<void>[] = [];
+	for (const source of sources) {
+		if (await isDir(source)) {
+			result.push(source);
+			work.push(
+				readdir(source).then((contents) =>
+					dirs(contents.map((content) => join(source, content))).then(
+						(directories) => {
+							result.push(...directories);
+						}
+					)
+				)
+			);
+		}
+	}
+	await Promise.all(work);
+	return [...new Set(result)];
+}

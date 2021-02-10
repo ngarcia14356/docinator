@@ -18,8 +18,8 @@ const hugo: string = require("hugo-bin");
 export const siteTemplatePath = join(__dirname, "site-template");
 
 export const hugoProvider: Provider = {
-	build: async (destinationPath, docsPath, ...sourcePaths) => {
-		const result = await build(destinationPath, docsPath, ...sourcePaths);
+	build: async (destinationPath, docsPath, sourcePaths) => {
+		const result = await build(destinationPath, docsPath, sourcePaths);
 		exec(`${hugo} --source ${destinationPath} `); //--destination ${this.destinationWorkspace.root}`)
 		return result;
 	},

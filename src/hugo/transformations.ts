@@ -1,6 +1,6 @@
 import { writeMarkdown } from "./../helpers/markdown";
 import { join, dirname, basename } from "path";
-import { exists, rename, writeFile, readFile, files, MAX_OPEN_FILES } from "../file-system/fs";
+import { exists, rename, writeFile, readFile, files, MAX_OPEN_FILES, dirs, commonRoot } from "../file-system/fs";
 import { mdLinksToPrettyLinks } from "../helpers/markdown";
 import { batchProcess } from "../utils";
 
@@ -29,30 +29,29 @@ export async function createDefaultIndexPages(contentPaths: string[]) {
 	// TODO: Generate page list here instead of using `children` short-code
 
 	const result: string[] = [];
-	const dirs: string[] = [];
-	await batchProcess(contentPaths, MAX_OPEN_FILES, async (paths) => {
+
+	const root = commonRoot(contentPaths);
+	if(!root) throw new Error("No common root found in content paths " + contentPaths);
+
+	await batchProcess(await dirs([root]), MAX_OPEN_FILES, async (paths) => {
 		const work: Promise<void>[] = [];
-		for (const path of paths) {
-			const dir = dirname(path);
-			if (!dirs.includes(dir)) {
-				const indexPath = join(dir, "_index.md");
-				if (!(await exists(indexPath))) {
-					if ((await files(dir)).find((path) => path.endsWith(".md"))) {
-						work.push(
-							writeMarkdown(
-								indexPath,
-								{ title: basename(dir), weight: 100 },
-								defaultIndexPageContent
-							).then(() => {
-								result.push(indexPath);
-							})
-						);
-					}
+		for (const currentDirectory of paths) {
+			const indexPath = join(currentDirectory, "_index.md");
+			if (!(await exists(indexPath))) {
+				if ((await files(currentDirectory)).find((path) => path.endsWith(".md"))) {
+					work.push(
+						writeMarkdown(
+							indexPath,
+							{ title: basename(currentDirectory), weight: 100 },
+							defaultIndexPageContent
+						).then(() => {
+							result.push(indexPath);
+						})
+					);
 				}
-				dirs.push(dir);
 			}
 		}
-		await Promise.all(work);
+		return Promise.all(work);
 	});
 
 	return result;
@@ -61,7 +60,6 @@ export async function createDefaultIndexPages(contentPaths: string[]) {
 export async function markdownLinksToHugoPrettyLinks(
 	contentPaths: string[]
 ) {
-	console.log("markdownLinksToHugoPrettyLinks")
 	await batchProcess(contentPaths, MAX_OPEN_FILES, async (paths) => {
 		const work: Promise<void>[] = [];
 		for (const contentPath of paths) {
