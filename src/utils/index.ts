@@ -29,7 +29,7 @@ export function exec(command: string) {
  * @returns - an array of arrays
  */
 export function chunk<T>(array: T[], size: number) {
-	const arrayCopy = [...array];
+	const arrayCopy = [...array]; // Prevent mutation on slice()
 	const result = [];
 	for (let i = 0; i < arrayCopy.length; i += size) {
 		// Do something if you want with the group
@@ -37,4 +37,15 @@ export function chunk<T>(array: T[], size: number) {
 	}
 
 	return result;
+}
+
+export async function batchProcess<TItem, TResult>(
+  array: TItem[],
+  size: number,
+  processBatch: { (items: TItem[]): Promise<TResult> }
+) {
+	const batches = chunk(array, size);
+	for (const batch of batches) {
+		await processBatch(batch);
+	}
 }

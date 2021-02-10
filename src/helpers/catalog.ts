@@ -26,7 +26,7 @@ export async function catalog(
 	catalogItem: Cataloger
 ): Promise<CatalogItem[]> {
 	await ensure(inDir);
-	const pathsRoot = commonRoot(...paths) || ".";
+	const pathsRoot = commonRoot(paths) || ".";
 	const result = await Promise.all(
 		paths.map((path) => {
 			const catalogRelLink = join(inDir, relative(pathsRoot, path));

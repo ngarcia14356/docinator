@@ -77,15 +77,16 @@ describe("The markdown module", function () {
 
 	describe("The mdTableColumnHeaders function", function () {
 		it("Converts an array to markdown table columns", function () {
-			expect(mdTableColumnHeaders("Column One", "Column Two")).to.equal(
-				"| Column One | Column Two |\n" + "|------------|------------|\n"
+			expect(mdTableColumnHeaders(["Column One", "Column Two"])).to.equal(
+				"| Column One | Column Two |\n" + 
+				"|------------|------------|\n"
 			);
 		});
 	});
 
 	describe("The mdTableColumns function", function () {
 		it("Converts an array to markdown table contents", function () {
-			expect(mdTableRow("Column One Value", "Column Two Value")).to.equal(
+			expect(mdTableRow(["Column One Value", "Column Two Value"])).to.equal(
 				"| Column One Value | Column Two Value |\n"
 			);
 		});

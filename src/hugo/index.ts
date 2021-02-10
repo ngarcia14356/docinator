@@ -42,7 +42,7 @@ export const build: Builder = async (
 	const docsPaths = sourcePaths.filter((path) => path.startsWith(docsPath));
 
 	sourcePaths = sourcePaths.map((path) => resolve(path));
-	const sourcePath = commonRoot(...sourcePaths);
+	const sourcePath = commonRoot(sourcePaths);
 
 	const sourceAssetPaths = sourcePaths.filter(
 		(path) =>
@@ -102,12 +102,12 @@ export const build: Builder = async (
 	// Serial Transformations
 	hugoContentPaths.push(...(await useReadMeAsIndex(...hugoContentPaths)));
 	hugoContentPaths.push(
-		...(await createDefaultIndexPages(...hugoContentPaths))
+		...(await createDefaultIndexPages(hugoContentPaths))
 	);
 
 	// Parallel Transformations
 	await Promise.all([
-		markdownLinksToHugoPrettyLinks(...hugoContentPaths),
+		markdownLinksToHugoPrettyLinks(hugoContentPaths),
 		render("png", hugoContentPaths).then((paths) =>
 			hugoContentPaths.push(...paths)
 		),

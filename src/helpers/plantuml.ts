@@ -1,6 +1,12 @@
 import { join } from "path";
-import { copyFile, readFile, stat, writeFile } from "../file-system/fs";
-import { chunk, exec } from "../utils";
+import {
+	copyFile,
+	MAX_OPEN_FILES,
+	readFile,
+	stat,
+	writeFile,
+} from "../file-system/fs";
+import { batchProcess, exec } from "../utils";
 
 const plantUmlJarFilePath = join(
 	__dirname,
@@ -12,7 +18,7 @@ export function normalize(pumlText: string) {
 	return pumlText.replace(/^@startuml.*/, "@startuml");
 }
 
-function normalizePumls(...pumlPaths: string[]) {
+function normalizePumls(pumlPaths: string[]) {
 	return Promise.all(
 		pumlPaths.map(async (path) => {
 			const content = await readFile(path, "utf8");
@@ -36,8 +42,6 @@ function normalizePumls(...pumlPaths: string[]) {
 					// process.exit(1);
 				}
 			}
-
-			// return "done";
 		})
 	);
 }
@@ -56,20 +60,15 @@ export async function render(format: string, pumlPaths: string[]) {
 	pumlPaths = pumlPaths.filter((path) => path.toLowerCase().endsWith(".puml"));
 	if (pumlPaths.length === 0) return [];
 
-	const normalizeChunks = chunk(pumlPaths, 512); // Prevent too many files from being open
-	const pumlPathsChunks = chunk(pumlPaths, 32); // Prevent command too long
-
-	for (const pumlPathsChunk of normalizeChunks) {
-		await normalizePumls(...pumlPathsChunk);
-	}
-
-	for (const pumlPathsChunk of pumlPathsChunks) {
-		exec(
-			`java -Djava.awt.headless=true -jar ${plantUmlJarFilePath} -t${format} ${pumlPathsChunk
-				.map((pumlPath) => `"${pumlPath}"`)
-				.join(" ")}`
-		);
-	}
+	await batchProcess(pumlPaths, MAX_OPEN_FILES, normalizePumls);
+	await batchProcess(pumlPaths, MAX_OPEN_FILES, (pumlPathsChunk) => 
+		Promise.resolve(
+			exec(
+				`java -Djava.awt.headless=true -jar ${plantUmlJarFilePath} -t${format} ${pumlPathsChunk
+					.map((pumlPath) => `"${pumlPath}"`)
+					.join(" ")}`
+		))
+	);
 
 	const rendered = pumlPaths.map(
 		(path) => path.substring(0, path.length - 4) + format
