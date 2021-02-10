@@ -32,14 +32,14 @@ describe("The plantuml module", function () {
 			});
 
 			describe("When it is rendered as a PNG", function () {
-				this.timeout(7000);
+				this.timeout(10000);
 				const pngPath = join(__dirname, "render.png");
 				const pumlPngPath = join(__dirname, "render.puml.png");
 
 				let renderResult: string[];
 
 				beforeEach(async function () {
-					renderResult = await render("png", pumlPath);
+					renderResult = await render("png", [pumlPath]);
 				});
 
 				afterEach(async function () {
@@ -69,10 +69,10 @@ describe("The plantuml module", function () {
 			});
 
 			it("Throws an exception to indicate the problem", async function () {
-				this.timeout(5000);
+				this.timeout(10000);
 				// const pngPath = join(__dirname, "invalid.png");
 				console.log("Rendering", pumlPath);
-				await render("png", pumlPath)
+				await render("png", [pumlPath])
 					.then(() => fail("Render succeeded with invalid puml"))
 					.catch((err: { message: string }) => {
 						expect(err.message).to.equal(

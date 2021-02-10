@@ -5,6 +5,8 @@ import { dirname, sep, resolve, join, relative } from "path";
 import { isDir, ensure } from "./directory";
 import { copyIfNewer } from "./file";
 
+export const MAX_OPEN_FILES = 512;
+
 export const copyFile = promisify(fs.copyFile);
 export const mkdir = promisify(fs.mkdir);
 export const readdir = promisify(fs.readdir);
@@ -25,20 +27,20 @@ export async function statSafe(path: string) {
 	}
 }
 
-export function commonRoot(...paths: string[]) {
+export function commonRoot(paths: string[]) {
 	return !paths || paths.length === 0
 		? undefined
 		: paths
-				.map((path) => dirname(resolve(path)))
-				.reduce((prev, curr) => {
-					const prevParts = prev.split(sep);
-					const currParts = curr.split(sep);
-					return prevParts.filter((part, i) => part === currParts[i]).join(sep);
-				});
+			.map((path) => dirname(resolve(path)))
+			.reduce((prev, curr) => {
+				const prevParts = prev.split(sep);
+				const currParts = curr.split(sep);
+				return prevParts.filter((part, i) => part === currParts[i]).join(sep);
+			});
 }
 
 export function copy(sourcePath?: string, ...includeOnly: string[]) {
-	const dirPath = sourcePath || commonRoot(...includeOnly) || ".";
+	const dirPath = sourcePath || commonRoot(includeOnly) || ".";
 	const cp = async function (
 		destination: string,
 		cpFile: { (sourcePath: string, destPath: string): Promise<string | null> }
@@ -78,7 +80,7 @@ export function copy(sourcePath?: string, ...includeOnly: string[]) {
 export async function exists(path: string) {
 	try {
 		return !!(await stat(path));
-	} catch (err: unknown) {
+	} catch (err) {
 		if ((err as { code: string }).code === noSuchFileOrDirectoryCode) {
 			return false;
 		}

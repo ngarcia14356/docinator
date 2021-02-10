@@ -76,9 +76,9 @@ export const mdContent = (metadata: Record<string, unknown>, content: string) =>
 export const mdLink = (text: string, href: string) =>
 	`[${text}](${encodeURI(href)})`;
 
-export function mdTableColumnHeaders(...headers: string[]) {
+export function mdTableColumnHeaders(headers: string[]) {
 	return (
-		mdTableRow(...headers) +
+		mdTableRow(headers) +
 		headers.reduce(
 			(columns, column) => columns + `${"-".repeat(column.length + 2)}|`,
 			"|"
@@ -94,7 +94,7 @@ export function mdTableColumnHeaders(...headers: string[]) {
  * @param {...string[]} values - Values to form the row
  * @returns - A string containing a single table row in markdown format
  */
-export function mdTableRow(...values: string[]) {
+export function mdTableRow(values: string[]) {
 	return (
 		values
 			.reduce((columns, value) => columns + `${value} | `, "| ")
@@ -102,8 +102,8 @@ export function mdTableRow(...values: string[]) {
 	);
 }
 
-export function mdTableRows(...values: string[][]) {
-	return values.reduce((rows, row) => rows + mdTableRow(...row), "");
+export function mdTableRows(values: string[][]) {
+	return values.reduce((rows, row) => rows + mdTableRow(row), "");
 }
 
 export const writeMarkdown = async (

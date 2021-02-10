@@ -18,9 +18,9 @@ export async function hugoRenderedItemsCatalog(
 	const indexPath = join(catalogPath, "_index.md");
 	if (!(await exists(indexPath))) {
 		const indexMdContent =
-			mdTableColumnHeaders("Raw File", "Rendered") +
+			mdTableColumnHeaders(["Raw File", "Rendered"]) +
 			mdTableRows(
-				...catalogItems.map((item) => [
+				catalogItems.map((item) => [
 					mdLink(
 						relative(dirname(indexPath), item.itemPath),
 						relative(dirname(indexPath), item.itemPath)
