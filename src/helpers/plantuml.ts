@@ -1,6 +1,5 @@
-import { copyFile } from "./../file-system/fs";
 import { join } from "path";
-import { writeFile, readFile } from "../file-system/fs";
+import { copyFile, readFile, stat, writeFile } from "../file-system/fs";
 import { chunk, exec } from "../utils";
 
 const plantUmlJarFilePath = join(
@@ -15,11 +14,31 @@ export function normalize(pumlText: string) {
 
 function normalizePumls(...pumlPaths: string[]) {
 	return Promise.all(
-		pumlPaths.map((path) =>
-			readFile(path, "utf8").then((content) =>
-				writeFile(path, normalize(content))
-			)
-		)
+		pumlPaths.map(async (path) => {
+			const content = await readFile(path, "utf8");
+			const originalLen = content.length;
+			const normalized = normalize(content);
+			const normalizedLen = normalized.length;
+
+			if (normalizedLen !== originalLen) {
+				await writeFile(path, normalized);
+				const newFileSize = (await stat(path)).size || (await stat(path)).size;
+				if (newFileSize === 0) {
+					console.warn("Normalized PUML length was zero!", {
+						path,
+						originalLen,
+						normalizedLen,
+						newFileSize,
+						newFileSizeCheck: (await stat(path)).size,
+						// content,
+						// normalized,
+					});
+					// process.exit(1);
+				}
+			}
+
+			// return "done";
+		})
 	);
 }
 
@@ -28,24 +47,27 @@ function normalizePumls(...pumlPaths: string[]) {
  *
  * @export
  * @param {string} format - The format to use to render the diagram
- * @param {...string[]} pumlPaths - The filepaths to render. Only paths ending in .puml will be rendered.
+ * @param {string[]} pumlPaths - The filepaths to render. Only paths ending in .puml will be rendered.
  * @returns An array of paths to the rendered diagrams
  */
-export async function render(format: string, ...pumlPaths: string[]) {
+export async function render(format: string, pumlPaths: string[]) {
 	if (!format || !pumlPaths || pumlPaths.length === 0) return [];
 
 	pumlPaths = pumlPaths.filter((path) => path.toLowerCase().endsWith(".puml"));
 	if (pumlPaths.length === 0) return [];
 
-	const pumlPathsChunks = chunk(pumlPaths, 64); // 64, 96, 128 Chunk to not exceed max arg length
+	const normalizeChunks = chunk(pumlPaths, 512); // Prevent too many files from being open
+	const pumlPathsChunks = chunk(pumlPaths, 32); // Prevent command too long
+
+	for (const pumlPathsChunk of normalizeChunks) {
+		await normalizePumls(...pumlPathsChunk);
+	}
 
 	for (const pumlPathsChunk of pumlPathsChunks) {
-		const normalizePumlsWork = normalizePumls(...pumlPathsChunk);
-		const paths = pumlPathsChunk.map((pumlPath) => `"${pumlPath}"`).join(" ");
-		await normalizePumlsWork;
-
 		exec(
-			`java -Djava.awt.headless=true -jar ${plantUmlJarFilePath} -t${format} ${paths}`
+			`java -Djava.awt.headless=true -jar ${plantUmlJarFilePath} -t${format} ${pumlPathsChunk
+				.map((pumlPath) => `"${pumlPath}"`)
+				.join(" ")}`
 		);
 	}
 

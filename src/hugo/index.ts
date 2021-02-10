@@ -108,10 +108,10 @@ export const build: Builder = async (
 	// Parallel Transformations
 	await Promise.all([
 		markdownLinksToHugoPrettyLinks(...hugoContentPaths),
-		render("png", ...hugoContentPaths).then((paths) =>
+		render("png", hugoContentPaths).then((paths) =>
 			hugoContentPaths.push(...paths)
 		),
-		render("svg", ...hugoContentPaths).then((paths) =>
+		render("svg", hugoContentPaths).then((paths) =>
 			hugoContentPaths.push(...paths)
 		),
 	]);
