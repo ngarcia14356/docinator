@@ -12,3 +12,6 @@ disablePathToLower = true
 # For search functionnality
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
+
+[markup.goldmark.renderer]
+  unsafe = true
