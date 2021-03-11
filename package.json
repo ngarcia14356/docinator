@@ -3,13 +3,13 @@
 	"description": "Extracts documentation from your project to produce a beautiful static website",
 	"license": "Apache-2.0",
 	"name": "@tmobile/docinator",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"scripts": {
-		"build": "npm link --force && npm prune && npm pack",
-		"build:clean": "rm -rf dest && npm run build",
+		"build": "tsc && cp -R src/hugo/site-template dist/hugo/site-template && npm link --force && npm prune && npm pack",
+		"build:clean": "npm run clean && npm run build",
+		"clean": "rm -f *.tgz && rm -rf dist && rm -rf dist/hugo/site-template",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"prepare": "tsc && rm -f *.tgz && rm -rf dist/hugo/site-template && cp -R src/hugo/site-template dist/hugo/site-template",
 		"start": "ts-node src/cli.ts",
 		"test": "mocha -r ts-node/register \\\"**/*.spec.ts\\\""
 	},
