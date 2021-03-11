@@ -9,7 +9,7 @@ disablePathToLower = true
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "tmobile"
 
-# For search functionnality
+# For search functionality
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
 
